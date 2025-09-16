@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
+import homeImage from '../Images/homeImage.webp';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -14,7 +15,7 @@ const fadeIn = {
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white font-sans">
+    <div className="min-h-screen bg-[#19191A] text-white font-sans">
       {/* Header */}
       <header className="flex justify-between items-center px-8 py-6 shadow-md bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center space-x-3">
@@ -28,32 +29,46 @@ const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="flex flex-col justify-center items-center text-center py-28 px-6 bg-gradient-to-br from-black via-gray-900 to-black">
-        <motion.h2 
-          className="text-5xl font-extrabold text-white drop-shadow-lg"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          Innovate. Build. Launch.
-        </motion.h2>
-        <motion.p 
-          className="mt-6 text-lg max-w-xl text-gray-300"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          Welcome to Zervix Lab – crafting next-gen digital solutions with cutting-edge technologies and user-first designs.
-        </motion.p>
-        <motion.a 
-          href="#contact"
-          className="mt-8 px-8 py-3 text-lg font-semibold rounded-full bg-white text-black shadow-lg hover:bg-gray-200 transition"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          Get Started
-        </motion.a>
+      <section className="relative h-[100svh] md:h-screen flex items-center justify-center text-center px-6 overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src={homeImage}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          {/* Dark gradient overlay for readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-gray-900/80 to-black/90" />
+        </div>
+
+        {/* Foreground content */}
+        <div className="relative z-10">
+          <motion.h2 
+            className="text-5xl font-extrabold text-white drop-shadow-lg"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            Innovate. Build. Launch.
+          </motion.h2>
+          <motion.p 
+            className="mt-6 text-lg max-w-xl mx-auto text-gray-200"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            Welcome to Zervix Lab – crafting next-gen digital solutions with cutting-edge technologies and user-first designs.
+          </motion.p>
+          <motion.a 
+            href="#contact"
+            className="mt-8 inline-block px-8 py-3 text-lg font-semibold rounded-full bg-white text-black shadow-lg hover:bg-gray-300 transition"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            Get Started
+          </motion.a>
+        </div>
       </section>
 
       {/* Services Section */}
