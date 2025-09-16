@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
@@ -14,42 +14,125 @@ const fadeIn = {
 };
 
 const LandingPage = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // mobile menu
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // lock body scroll when menu is open
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = menuOpen ? 'hidden' : original || '';
+    return () => (document.body.style.overflow = original);
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <div className="min-h-screen bg-[#19191A] text-white font-sans">
-      {/* Header */}
-      <header className="flex justify-between items-center px-8 py-6 shadow-md bg-black/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="flex items-center space-x-3">
-          <img src={logo} alt="Zervix Lab Logo" className="h-16 w-auto" />
+    <div className="min-h-screen text-white font-sans scroll-smooth">
+      {/* Header (overlay on hero) */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? 'bg-black/70 backdrop-blur-md' : 'bg-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 md:h-24">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="Zervix Lab Logo" className="h-8 md:h-[72px] w-auto" />
+          </div>
+
+          {/* Desktop nav */}
+          <nav className="hidden md:flex space-x-6 text-base">
+            <a href="#home" className="text-white/90 hover:text-white transition">Home</a>
+            <a href="#services" className="text-white/90 hover:text-white transition">Services</a>
+            <a href="#about" className="text-white/90 hover:text-white transition">About</a>
+            <a href="#contact" className="text-white/90 hover:text-white transition">Contact</a>
+          </nav>
+
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white/90 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+            aria-label="Toggle navigation"
+            aria-controls="mobile-menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? (
+              // X icon
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              // Hamburger icon
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
         </div>
-        <nav className="space-x-6 text-lg">
-          <a href="#services" className="hover:text-gray-300 transition">Services</a>
-          <a href="#about" className="hover:text-gray-300 transition">About</a>
-          <a href="#contact" className="hover:text-gray-300 transition">Contact</a>
-        </nav>
+
+        {/* Mobile slide-over + backdrop */}
+        <div className={`${menuOpen ? 'pointer-events-auto' : 'pointer-events-none'} md:hidden`}>
+          {/* Backdrop */}
+          <div
+            className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-200 ${menuOpen ? 'opacity-100' : 'opacity-0'}`}
+            onClick={closeMenu}
+          />
+          {/* Panel */}
+          <nav
+            id="mobile-menu"
+            className={`fixed top-0 right-0 z-50 h-full w-72 bg-[#0b0b0b]/95 backdrop-blur-md border-l border-white/10 pt-20 px-6 flex flex-col gap-4 transform transition-transform duration-300 ${
+              menuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
+            <a href="#home" onClick={closeMenu} className="py-2 text-white/90 hover:text-white">Home</a>
+            <a href="#services" onClick={closeMenu} className="py-2 text-white/90 hover:text-white">Services</a>
+            <a href="#about" onClick={closeMenu} className="py-2 text-white/90 hover:text-white">About</a>
+            <a href="#contact" onClick={closeMenu} className="py-2 text-white/90 hover:text-white">Contact</a>
+          </nav>
+        </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative h-[100svh] md:h-screen flex items-center justify-center text-center px-6 overflow-hidden">
+      <section id='home' className="relative h-[100svh] md:h-screen flex items-center justify-center text-center px-6 overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
-          <img
-            src={homeImage}
-            alt=""
-            className="w-full h-full object-cover"
-          />
-          {/* Dark gradient overlay for readability */}
+          <img src={homeImage} alt="" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-gray-900/80 to-black/90" />
         </div>
 
         {/* Foreground content */}
         <div className="relative z-10">
           <motion.h2 
-            className="text-5xl font-extrabold text-white drop-shadow-lg"
+            className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg leading-tight"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            Innovate. Build. Launch.
+            {/* Each word is hoverable. 'Launch.' is orange by default; hover -> white */}
+            {['Innovate.', 'Design.', 'Build.', 'Launch.'].map((word, i) => {
+              const isLaunch = word === 'Launch.';
+              return (
+                <React.Fragment key={i}>
+                  <motion.span
+                    className={`inline-block mr-2 cursor-pointer select-none ${isLaunch ? 'text-orange-500' : ''}`}
+                    whileHover={{ y: -8, color: isLaunch ? '#ffffff' : '#f97316' }}
+                    whileTap={{ y: -6, scale: 0.98, color: isLaunch ? '#ffffff' : '#f97316' }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 18 }}
+                  >
+                    {word}
+                  </motion.span>
+                  {/* 2 rows on mobile */}
+                  {i === 1 && <br className="block md:hidden" />}
+                </React.Fragment>
+              );
+            })}
           </motion.h2>
           <motion.p 
             className="mt-6 text-lg max-w-xl mx-auto text-gray-200"
@@ -57,7 +140,7 @@ const LandingPage = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Welcome to Zervix Lab – crafting next-gen digital solutions with cutting-edge technologies and user-first designs.
+            Welcome to Zervix Lab – where technology meets creativity. We craft next-gen IT solutions and captivating graphic designs with cutting-edge technologies and user-first experiences.
           </motion.p>
           <motion.a 
             href="#contact"
@@ -72,7 +155,7 @@ const LandingPage = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 px-8 bg-black text-white text-center">
+      <section id="services" className="scroll-mt-24 py-20 px-8 bg-black text-white text-center">
         <motion.h3 
           className="text-3xl font-bold mb-10"
           initial="hidden"
@@ -106,7 +189,7 @@ const LandingPage = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-8 bg-[#0a0a0a] text-white text-center">
+      <section id="about" className="scroll-mt-24 py-20 px-8 bg-[#0a0a0a] text-white text-center">
         <motion.h3
           className="text-3xl font-bold mb-10"
           initial="hidden"
@@ -155,7 +238,7 @@ const LandingPage = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-8 bg-[#111] text-white text-center">
+      <section id="contact" className="scroll-mt-24 py-20 px-8 bg-[#111] text-white text-center">
         <motion.h3
           className="text-3xl font-bold mb-10"
           initial="hidden"
