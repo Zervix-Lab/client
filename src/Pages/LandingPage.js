@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
@@ -14,18 +14,35 @@ const fadeIn = {
 };
 
 const LandingPage = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#19191A] text-white font-sans">
-      {/* Header */}
-      <header className="flex justify-between items-center px-8 py-6 shadow-md bg-black/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="flex items-center space-x-3">
-          <img src={logo} alt="Zervix Lab Logo" className="h-16 w-auto" />
+    <div className="min-h-screen text-white font-sans scroll-smooth">
+      {/* Header (overlay on hero) */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? 'bg-black/70 backdrop-blur-md   '
+            : 'bg-transparent '
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="Zervix Lab Logo" className="h-[100px] w-auto" />
+          </div>
+          <nav className="space-x-6 text-base">
+            <a href="#services" className="text-white/90 hover:text-white transition">Services</a>
+            <a href="#about" className="text-white/90 hover:text-white transition">About</a>
+            <a href="#contact" className="text-white/90 hover:text-white transition">Contact</a>
+          </nav>
         </div>
-        <nav className="space-x-6 text-lg">
-          <a href="#services" className="hover:text-gray-300 transition">Services</a>
-          <a href="#about" className="hover:text-gray-300 transition">About</a>
-          <a href="#contact" className="hover:text-gray-300 transition">Contact</a>
-        </nav>
       </header>
 
       {/* Hero Section */}
@@ -44,7 +61,7 @@ const LandingPage = () => {
         {/* Foreground content */}
         <div className="relative z-10">
           <motion.h2 
-            className="text-5xl font-extrabold text-white drop-shadow-lg"
+            className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -72,7 +89,7 @@ const LandingPage = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 px-8 bg-black text-white text-center">
+      <section id="services" className="scroll-mt-24 py-20 px-8 bg-black text-white text-center">
         <motion.h3 
           className="text-3xl font-bold mb-10"
           initial="hidden"
@@ -106,7 +123,7 @@ const LandingPage = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-8 bg-[#0a0a0a] text-white text-center">
+      <section id="about" className="scroll-mt-24 py-20 px-8 bg-[#0a0a0a] text-white text-center">
         <motion.h3
           className="text-3xl font-bold mb-10"
           initial="hidden"
@@ -155,7 +172,7 @@ const LandingPage = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-8 bg-[#111] text-white text-center">
+      <section id="contact" className="scroll-mt-24 py-20 px-8 bg-[#111] text-white text-center">
         <motion.h3
           className="text-3xl font-bold mb-10"
           initial="hidden"
