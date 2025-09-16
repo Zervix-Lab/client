@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline} from 'react-icons/io5';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
 import homeImage from '../Images/homeImage.webp';
+import homeImage2 from '../Images/homeImage2.webp';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -15,7 +17,27 @@ const fadeIn = {
 
 const LandingPage = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // mobile menu
+  const [menuOpen, setMenuOpen] = useState(false);
+  // highlight active section in nav
+  const [activeSection, setActiveSection] = useState('home');
+
+  // --- Background Slideshow State ---
+  const images = React.useMemo(() => [homeImage, homeImage2], []);
+  const [bgIndex, setBgIndex] = useState(0);
+
+  // Preload images to prevent flash on first load
+  useEffect(() => {
+    images.forEach(src => { const img = new Image(); img.src = src; });
+  }, [images]);
+
+  // Cycle through images every 15 seconds
+  useEffect(() => {
+    const id = setInterval(() => {
+      setBgIndex(i => (i + 1) % images.length);
+    }, 15000);
+    return () => clearInterval(id);
+  }, [images.length]);
+  // --- End Slideshow State ---
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -31,6 +53,26 @@ const LandingPage = () => {
     return () => (document.body.style.overflow = original);
   }, [menuOpen]);
 
+  // Track which section is in view
+  useEffect(() => {
+    const ids = ['home', 'services', 'about', 'contact'];
+    const els = ids
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { threshold: 0.6 } // 60% visible to become active
+    );
+
+    els.forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -43,15 +85,39 @@ const LandingPage = () => {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 md:h-24">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Zervix Lab Logo" className="h-[72px] md:h-[72px] w-auto" />
+            <img src={logo} alt="Zervix Lab Logo" className="h-[82px] md:h-[102px] w-auto" />
           </div>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex space-x-6 text-base">
-            <a href="#home" className="text-white/90 hover:text-white transition">Home</a>
-            <a href="#services" className="text-white/90 hover:text-white transition">Services</a>
-            <a href="#about" className="text-white/90 hover:text-white transition">About</a>
-            <a href="#contact" className="text-white/90 hover:text-white transition">Contact</a>
+            <a
+              href="#home"
+              aria-current={activeSection === 'home' ? 'page' : undefined}
+              className={`transition ${activeSection === 'home' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              Home
+            </a>
+            <a
+              href="#services"
+              aria-current={activeSection === 'services' ? 'page' : undefined}
+              className={`transition ${activeSection === 'services' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              Services
+            </a>
+            <a
+              href="#about"
+              aria-current={activeSection === 'about' ? 'page' : undefined}
+              className={`transition ${activeSection === 'about' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              About
+            </a>
+            <a
+              href="#contact"
+              aria-current={activeSection === 'contact' ? 'page' : undefined}
+              className={`transition ${activeSection === 'contact' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              Contact
+            </a>
           </nav>
 
           {/* Mobile menu button */}
@@ -87,28 +153,68 @@ const LandingPage = () => {
           {/* Panel */}
           <nav
             id="mobile-menu"
-            className={`fixed top-0 right-0 z-50 h-full w-72 bg-[#0b0b0b]/95 backdrop-blur-md border-l border-white/10 pt-20 px-6 flex flex-col gap-4 transform transition-transform duration-300 ${
-              menuOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+            className={`fixed top-0 right-0 z-50 h-full w-72 bg-[#0b0b0b]/95 backdrop-blur-md border-l border-white/10 pt-20 px-6 flex flex-col gap-4 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
-            <a href="#home" onClick={closeMenu} className="py-2 text-white/90 hover:text-white">Home</a>
-            <a href="#services" onClick={closeMenu} className="py-2 text-white/90 hover:text-white">Services</a>
-            <a href="#about" onClick={closeMenu} className="py-2 text-white/90 hover:text-white">About</a>
-            <a href="#contact" onClick={closeMenu} className="py-2 text-white/90 hover:text-white">Contact</a>
+            <a
+              href="#home"
+              onClick={closeMenu}
+              aria-current={activeSection === 'home' ? 'page' : undefined}
+              className={`py-2 transition ${activeSection === 'home' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              Home
+            </a>
+            <a
+              href="#services"
+              onClick={closeMenu}
+              aria-current={activeSection === 'services' ? 'page' : undefined}
+              className={`py-2 transition ${activeSection === 'services' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              Services
+            </a>
+            <a
+              href="#about"
+              onClick={closeMenu}
+              aria-current={activeSection === 'about' ? 'page' : undefined}
+              className={`py-2 transition ${activeSection === 'about' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              About
+            </a>
+            <a
+              href="#contact"
+              onClick={closeMenu}
+              aria-current={activeSection === 'contact' ? 'page' : undefined}
+              className={`py-2 transition ${activeSection === 'contact' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              Contact
+            </a>
           </nav>
         </div>
       </header>
 
       {/* Hero Section */}
       <section id='home' className="relative h-[100svh] md:h-screen flex items-center justify-center text-center px-6 overflow-hidden">
-        {/* Background image */}
+        {/* Background Image Slideshow */}
         <div className="absolute inset-0">
-          <img src={homeImage} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-gray-900/80 to-black/90" />
+          <AnimatePresence>
+            {/* Simple cross-fade transition */}
+            <motion.img
+              key={bgIndex}
+              src={images[bgIndex]}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 3, ease: 'easeInOut' }} // Slow, smooth fade
+            />
+          </AnimatePresence>
+          {/* Dark gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#19191A]/75 via-[#19191A]/90 to-[#19191A]" />
         </div>
 
         {/* Foreground content */}
         <div className="relative z-10">
+          
           <motion.h2 
             className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg leading-tight"
             initial={{ opacity: 0, y: -20 }}
@@ -134,28 +240,76 @@ const LandingPage = () => {
               );
             })}
           </motion.h2>
+          
           <motion.p 
             className="mt-6 text-lg max-w-xl mx-auto text-gray-200"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Welcome to Zervix Lab – where technology meets creativity. We craft next-gen IT solutions and captivating graphic designs with cutting-edge technologies and user-first experiences.
+            <span className="text-orange-500">Zervix Lab</span> blends technology and creativity to build modern, user-first solutions and standout designs.
           </motion.p>
+          
           <motion.a 
             href="#contact"
-            className="mt-8 inline-block px-8 py-3 text-lg font-semibold rounded-full bg-white text-black shadow-lg hover:bg-gray-300 transition"
+            className="mt-8 inline-block px-8 py-3 text-lg font-semibold rounded-xl bg-white text-black shadow-lg hover:bg-gray-300 transition border-2 border-white"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
           >
             Get Started
           </motion.a>
+          <motion.a
+            href="#services"
+            className="mt-4 md:mt-8 md:ml-4 inline-block px-8 py-3 text-lg font-semibold rounded-xl border-2 border-white text-white hover:bg-white/10 transition"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            View Services
+          </motion.a>
+        </div>
+        {/* Key Features Bar */}
+        <div className="absolute bottom-0 left-0 right-0 w-screen px-3 md:px-6 pb-3 md:pb-6">
+          <motion.div
+            className="mx-auto max-w-6xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
+            <div className="relative rounded-2xl p-[1px] bg-gradient-to-r from-orange-100/10 via-amber-100/60 to-orange-100/70 ">
+              <div className="relative rounded-2xl bg-[#19191A]/95 backdrop-blur-xl">
+                {/* subtle top gloss */}
+                <div className="pointer-events-none absolute inset-x-0 -top-1 h-1 rounded-t-2xl bg-gradient-to-r from-white/5 via-white/10 to-transparent blur-sm" />
+                {/* dividers between 3 equal columns */}
+                <div className="relative w-full grid grid-cols-3 items-center text-xs md:text-base lg:text-lg py-2.5 md:py-3.5 px-4 md:px-8 divide-x divide-white/10">
+                  <div className="px-4 md:px-6 lg:px-8 flex justify-center">
+                    <Feature
+                      icon={<IoDiamondOutline className="text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.35)]" />}
+                      label="Quality Work"
+                    />
+                  </div>
+                  <div className="px-4 md:px-6 lg:px-8 flex justify-center">
+                    <Feature
+                      icon={<IoFlashOutline className="text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.35)]" />}
+                      label="Fast Delivery"
+                    />
+                  </div>
+                  <div className="px-4 md:px-6 lg:px-8 flex justify-center">
+                    <Feature
+                      icon={<IoColorPaletteOutline className="text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.35)]" />}
+                      label="Creativity"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="scroll-mt-24 py-20 px-8 bg-black text-white text-center">
+      <section id="services" className="scroll-mt-24 py-20 px-8 bg-[#19191A] text-white text-center ">
         <motion.h3 
           className="text-3xl font-bold mb-10"
           initial="hidden"
@@ -174,8 +328,8 @@ const LandingPage = () => {
           ].map((service, i) => (
             <motion.div
               key={i}
-              className="bg-[#111] p-6 rounded-xl shadow-md hover:shadow-white/10 transition"
-              custom={i * 0.1}
+              className="bg-[#101112] border border-white/10 p-6 rounded-xl shadow-md hover:shadow-white/10 hover:border-white/20 transition h-full flex flex-col"
+              custom={i + 1} // clean stagger: 0.2s, 0.4s, 0.6s, 0.8s
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -294,3 +448,19 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
+// Small UI helpers for the feature strip
+const Feature = ({ icon, label, className = '' }) => (
+  <motion.div
+    whileHover={{ y: -4, scale: 1.03 }}
+    whileTap={{ scale: 0.98 }}
+    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+    className={`group flex shrink-0 items-center gap-2 md:gap-3 ${className}`}
+  >
+    <span className="text-base md:text-2xl lg:text-3xl">{icon}</span>
+    <span className="text-white/90 group-hover:text-white transition-colors">
+      {label}
+    </span>
+  </motion.div>
+);
+
