@@ -43,7 +43,7 @@ const LandingPage = () => {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 md:h-24">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Zervix Lab Logo" className="h-8 md:h-[72px] w-auto" />
+            <img src={logo} alt="Zervix Lab Logo" className="h-[72px] md:h-[72px] w-auto" />
           </div>
 
           {/* Desktop nav */}
