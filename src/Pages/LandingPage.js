@@ -125,8 +125,8 @@ const LandingPage = () => {
       />
       {/* Header (overlay on hero) */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled && !menuOpen ? 'bg-black/70 backdrop-blur-md' : ''
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-100 ${
+          scrolled && !menuOpen ? 'bg-black/30 backdrop-blur-md md:bg-black/20' : ''
         } ${menuOpen ? 'bg-black' : 'md:bg-transparent'}`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 md:h-24">
