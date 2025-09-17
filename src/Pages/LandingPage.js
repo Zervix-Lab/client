@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoLinkOutline} from 'react-icons/io5';
+import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoGlobeOutline} from 'react-icons/io5';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
 import homeImage from '../Images/homeImage.webp';
@@ -532,21 +532,21 @@ const LandingPage = () => {
               <div className="text-left">
                 <h4 className="text-xl font-semibold text-orange-400">A Word from Our CEO</h4>
                 <p className="mt-2 text-gray-300 italic">
-                  “We’re not just building software—we’re shaping experiences. Our passion for innovation and teamwork drives us to push the boundaries of what's possible.”
+                  “We’re not just building digital solutions—we’re shaping experiences. Our passion for blending technology and creativity drives us to push the boundaries of what's possible.”
                 </p>
-                <p className="mt-3 font-semibold text-white text-right">— Tharindu Dilshan, CEO</p>
-                <div className="flex justify-end items-center gap-4 mt-4">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                <p className="mt-3 font-semibold text-white text-right">— Tharindu Ekanayake, CEO</p>
+                <div className="flex justify-start items-center gap-4 mt-4">
+                  <a href="https://www.linkedin.com/in/tharindu-dilshan-ekanayake-462919195" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
                     <IoLogoLinkedin size={22} />
                   </a>
-                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                  <a href="https://www.facebook.com/tharindu.dilshan.3154" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
                     <IoLogoFacebook size={22} />
                   </a>
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                  <a href="https://www.instagram.com/tharindu_dilshan_ekanayake_/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
                     <IoLogoInstagram size={22} />
                   </a>
-                  <a href="#!" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
-                    <IoLinkOutline size={22} />
+                  <a href="https://tharindudilshanekanayake-8f97816b421e.herokuapp.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                    <IoGlobeOutline size={22} />
                   </a>
                 </div>
               </div>
