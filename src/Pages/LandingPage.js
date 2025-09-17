@@ -243,6 +243,28 @@ const LandingPage = () => {
           >
             Contact
           </a>
+
+          {/* Mobile Nav Contact Info */}
+          <div className="mt-auto pb-8">
+            <hr className="border-white/10 my-6" />
+            <div className="text-center">
+              <p className="text-sm text-gray-400 mb-4">Get in Touch</p>
+              <div className="flex justify-center items-center gap-6">
+                <a href="mailto:zervixlab@gmail.com" className="text-gray-400 hover:text-orange-500 transition" aria-label="Email">
+                  <IoMailOutline size={24} />
+                </a>
+                <a href="https://wa.me/94768849340" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition" aria-label="WhatsApp">
+                  <IoLogoWhatsapp size={24} />
+                </a>
+                <a href="https://www.linkedin.com/company/zervix-lab" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition" aria-label="LinkedIn">
+                  <IoLogoLinkedin size={24} />
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61571592040526" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition" aria-label="Facebook">
+                  <IoLogoFacebook size={24} />
+                </a>
+              </div>
+            </div>
+          </div>
         </nav>
       </div>
 
@@ -615,7 +637,7 @@ const LandingPage = () => {
 
           {/* Contact Icons */}
           <div className="flex justify-center items-center gap-6 md:gap-8 mb-8">
-            <a href="mailto:info@zervixlab.com" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="Email">
+            <a href="mailto:zervixlab@gmail.com" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="Email">
               <IoMailOutline size={30} />
             </a>
             <a href="https://wa.me/94768849340" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="WhatsApp">
