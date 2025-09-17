@@ -134,7 +134,7 @@ const LandingPage = () => {
       />
       {/* Header (overlay on hero) */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-100 ${
           menuOpen ? 'bg-black' : scrolled ? 'bg-black/30 backdrop-blur-md md:bg-black/20' : 'md:bg-transparent'
         }`}
       >
@@ -197,54 +197,54 @@ const LandingPage = () => {
             )}
           </button>
         </div>
-
-        {/* Mobile slide-over + backdrop */}
-        <div className={`${menuOpen ? 'pointer-events-auto' : 'pointer-events-none'} md:hidden`}>
-          {/* Backdrop */}
-          <div
-            className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-200 ${menuOpen ? 'opacity-100' : 'opacity-0'}`}
-            onClick={closeMenu}
-          />
-          {/* Panel */}
-          <nav
-            id="mobile-menu"
-            className={`fixed top-0 right-0 z-50 h-full w-72 bg-black border-l border-white/10 pt-20 px-6 flex flex-col gap-4 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
-          >
-            <a
-              href="#home"
-              onClick={(e) => handleMobileLinkClick(e, 'home')}
-              aria-current={activeSection === 'home' ? 'page' : undefined}
-              className={`py-2 transition ${activeSection === 'home' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
-            >
-              Home
-            </a>
-            <a
-              href="#services"
-              onClick={(e) => handleMobileLinkClick(e, 'services')}
-              aria-current={activeSection === 'services' ? 'page' : undefined}
-              className={`py-2 transition ${activeSection === 'services' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
-            >
-              Services
-            </a>
-            <a
-              href="#about"
-              onClick={(e) => handleMobileLinkClick(e, 'about')}
-              aria-current={activeSection === 'about' ? 'page' : undefined}
-              className={`py-2 transition ${activeSection === 'about' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
-            >
-              About
-            </a>
-            <a
-              href="#contact"
-              onClick={(e) => handleMobileLinkClick(e, 'contact')}
-              aria-current={activeSection === 'contact' ? 'page' : undefined}
-              className={`py-2 transition ${activeSection === 'contact' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
-            >
-              Contact
-            </a>
-          </nav>
-        </div>
       </header>
+
+      {/* Mobile slide-over + backdrop (MOVED OUTSIDE HEADER) */}
+      <div className={`${menuOpen ? 'pointer-events-auto' : 'pointer-events-none'} md:hidden`}>
+        {/* Backdrop */}
+        <div
+          className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-200 ${menuOpen ? 'opacity-100' : 'opacity-0'}`}
+          onClick={closeMenu}
+        />
+        {/* Panel */}
+        <nav
+          id="mobile-menu"
+          className={`fixed top-0 right-0 z-50 h-full w-72 bg-black border-l border-white/10 pt-20 px-6 flex flex-col gap-4 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          <a
+            href="#home"
+            onClick={(e) => handleMobileLinkClick(e, 'home')}
+            aria-current={activeSection === 'home' ? 'page' : undefined}
+            className={`py-2 transition ${activeSection === 'home' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+          >
+            Home
+          </a>
+          <a
+            href="#services"
+            onClick={(e) => handleMobileLinkClick(e, 'services')}
+            aria-current={activeSection === 'services' ? 'page' : undefined}
+            className={`py-2 transition ${activeSection === 'services' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+          >
+            Services
+          </a>
+          <a
+            href="#about"
+            onClick={(e) => handleMobileLinkClick(e, 'about')}
+            aria-current={activeSection === 'about' ? 'page' : undefined}
+            className={`py-2 transition ${activeSection === 'about' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+          >
+            About
+          </a>
+          <a
+            href="#contact"
+            onClick={(e) => handleMobileLinkClick(e, 'contact')}
+            aria-current={activeSection === 'contact' ? 'page' : undefined}
+            className={`py-2 transition ${activeSection === 'contact' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+          >
+            Contact
+          </a>
+        </nav>
+      </div>
 
       {/* Hero Section */}
       <section id='home' className="relative h-[100svh] md:h-screen flex items-center justify-center text-center px-6 overflow-hidden">
