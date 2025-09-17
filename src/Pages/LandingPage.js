@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
+import toast, { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoGlobeOutline} from 'react-icons/io5';
+import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoGlobeOutline, IoLogoWhatsapp, IoCallOutline, IoMailOutline} from 'react-icons/io5';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
 import homeImage from '../Images/homeImage.webp';
@@ -24,6 +26,8 @@ const fadeIn = {
 };
 
 const LandingPage = () => {
+  const [state, handleSubmit] = useForm("mwpndnbw");
+  const formRef = useRef();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   // highlight active section in nav
@@ -99,8 +103,26 @@ const LandingPage = () => {
 
   const closeMenu = () => setMenuOpen(false);
 
+  useEffect(() => {
+    if (state.succeeded) {
+      toast.success("Message sent successfully!");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+    }
+  }, [state.succeeded]);
+
   return (
     <div className="min-h-screen text-white font-sans scroll-smooth">
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        }}
+      />
       {/* Header (overlay on hero) */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -578,40 +600,171 @@ const LandingPage = () => {
           viewport={{ once: true }}
           variants={fadeIn}
         >
-          <p className="mb-6">
-            Have an idea or project in mind? We'd love to hear from you!
+          <p className="mb-8">
+            Have an idea or project in mind? We'd love to hear from you! Get in touch directly or fill out the form below.
           </p>
-          <form  action="https://formspree.io/f/mzzrepje" method="POST" className="space-y-4">
+
+          {/* Contact Icons */}
+          <div className="flex justify-center items-center gap-6 md:gap-8 mb-8">
+            <a href="mailto:info@zervixlab.com" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="Email">
+              <IoMailOutline size={30} />
+            </a>
+            <a href="https://wa.me/94768849340" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="WhatsApp">
+              <IoLogoWhatsapp size={30} />
+            </a>
+            <a href="tel:+94768849340" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="Call">
+              <IoCallOutline size={30} />
+            </a>
+            <a href="https://www.linkedin.com/company/zervix-lab" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="LinkedIn">
+              <IoLogoLinkedin size={30} />
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61571592040526" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="Facebook">
+              <IoLogoFacebook size={30} />
+            </a>
+          </div>
+
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
             <input
+              id="name"
               type="text"
               name="name"
               placeholder="Your Name"
               required
               className="w-full px-4 py-3 rounded-lg bg-[#222] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
+            <ValidationError 
+              prefix="Name" 
+              field="name"
+              errors={state.errors}
+              className="text-red-500 text-sm text-left -mt-2"
+            />
             <input
+              id="email"
               type="email"
               name="email"
               placeholder="Your Email"
               required
               className="w-full px-4 py-3 rounded-lg bg-[#222] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
+            <ValidationError 
+              prefix="Email" 
+              field="email"
+              errors={state.errors}
+              className="text-red-500 text-sm text-left -mt-2"
+            />
             <textarea
-             name="message"
+              id="message"
+              name="message"
               rows="4"
               placeholder="Your Message"
               required
               className="w-full px-4 py-3 rounded-lg bg-[#222] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
             ></textarea>
+            <ValidationError 
+              prefix="Message" 
+              field="message"
+              errors={state.errors}
+              className="text-red-500 text-sm text-left -mt-2"
+            />
             <button
               type="submit"
-              className="w-full py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-semibold text-lg"
+              disabled={state.submitting}
+              className="w-full py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-semibold text-lg disabled:bg-gray-500 disabled:cursor-not-allowed"
             >
               Send Message
             </button>
           </form>
         </motion.div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-black border-t border-white/10 text-gray-400">
+        <div className="max-w-7xl mx-auto py-16 px-8 ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center sm:text-left">
+            {/* Column 1: About */}
+            <div className="lg:col-span-1">
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-4">
+                <img src={logo} alt="Zervix Lab Logo" className="h-24 w-auto -ml-3" />
+              </div>
+              <p className="text-sm text-gray-400">
+                Architects of the digital future, blending technology and creativity to build modern solutions.
+              </p>
+            </div>
+            
+            {/* Column 2: Quick Links */}
+            <div>
+              <h5 className="font-bold text-white text-lg mb-4">Quick Links</h5>
+              <ul className="space-y-3 text-sm">
+                <li><a href="#home" className="hover:text-orange-500 transition">Home</a></li>
+                <li><a href="#services" className="hover:text-orange-500 transition">Services</a></li>
+                <li><a href="#about" className="hover:text-orange-500 transition">About</a></li>
+                <li><a href="#contact" className="hover:text-orange-500 transition">Contact</a></li>
+              </ul>
+            </div>
+
+            {/* Column 3: Contact Info */}
+            <div>
+              <h5 className="font-bold text-white text-lg mb-4">Get in Touch</h5>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <a href="mailto:zervixlab@gmail.com" className="flex items-center justify-center sm:justify-start gap-2 hover:text-orange-500 transition">
+                    <IoMailOutline />
+                    <span>zervixlab@gmail.com</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:+94768849340" className="flex items-center justify-center sm:justify-start gap-2 hover:text-orange-500 transition">
+                    <IoCallOutline />
+                    <span>(+94) 76 884 9340</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://wa.me/94768849340" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center sm:justify-start gap-2 hover:text-orange-500 transition">
+                    <IoLogoWhatsapp />
+                    <span>WhatsApp</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 4: Social Links & Subscribe */}
+            <div>
+              <h5 className="font-bold text-white text-lg mb-4">Follow Us</h5>
+              <div className="flex justify-center sm:justify-start items-center gap-4 mb-6">
+                <a href="https://www.linkedin.com/company/zervix-lab" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition" aria-label="LinkedIn">
+                  <IoLogoLinkedin size={24} />
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61571592040526" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition" aria-label="Facebook">
+                  <IoLogoFacebook size={24} />
+                </a>
+              </div>
+
+              
+              <p className="text-sm mb-3">Get the latest updates and news from us.</p>
+              <form className="flex items-center">
+                <input
+                  type="email"
+                  name="subscribe_email"
+                  placeholder="Your email address"
+                  className="w-full px-3 py-2.5 text-sm rounded-l-md bg-[#222] text-white border border-r-0 border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="px-4 py-2.5 bg-orange-500 text-white rounded-r-md hover:bg-orange-600 transition font-semibold text-sm"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+          
+          {/* Bottom Bar */}
+          <div className="mt-12 border-t border-white/10 pt-8 text-center text-sm">
+            <p>&copy; {new Date().getFullYear()} Zervix Lab. All Rights Reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
