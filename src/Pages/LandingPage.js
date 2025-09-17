@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoGlobeOutline, IoLogoWhatsapp, IoCallOutline, IoMailOutline} from 'react-icons/io5';
 import logo from '../Images/logo.png';
-import ceo from '../Images/ceo.jpeg';
+import ceo from '../Images/ceo.jpg';
 import homeImage from '../Images/homeImage.webp';
 import homeImage2 from '../Images/homeImage2.webp';
 import service from '../Images/services.webp'
