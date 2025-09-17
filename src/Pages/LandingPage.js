@@ -615,7 +615,7 @@ const LandingPage = () => {
 
           {/* Contact Icons */}
           <div className="flex justify-center items-center gap-6 md:gap-8 mb-8">
-            <a href="mailto:info@zervixlab.com" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="Email">
+            <a href="mailto:zervixlab@gmail.com" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="Email">
               <IoMailOutline size={30} />
             </a>
             <a href="https://wa.me/94768849340" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition-colors duration-300" aria-label="WhatsApp">
