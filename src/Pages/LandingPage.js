@@ -134,9 +134,9 @@ const LandingPage = () => {
       />
       {/* Header (overlay on hero) */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-100 ${
-          scrolled && !menuOpen ? 'bg-black/30 backdrop-blur-md md:bg-black/20' : ''
-        } ${menuOpen ? 'bg-black' : 'md:bg-transparent'}`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          menuOpen ? 'bg-black' : scrolled ? 'bg-black/30 backdrop-blur-md md:bg-black/20' : 'md:bg-transparent'
+        }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 md:h-24">
           <div className="flex items-center gap-3">
