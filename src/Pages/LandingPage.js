@@ -94,12 +94,21 @@ const LandingPage = () => {
           if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
-      { threshold: 0.6 } // 60% visible to become active
+      { rootMargin: '-40% 0px -60% 0px' } // Active when in the middle 20% of the screen
     );
 
     els.forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+
+  const handleMobileLinkClick = (e, targetId) => {
+    e.preventDefault();
+    closeMenu();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -203,7 +212,7 @@ const LandingPage = () => {
           >
             <a
               href="#home"
-              onClick={closeMenu}
+              onClick={(e) => handleMobileLinkClick(e, 'home')}
               aria-current={activeSection === 'home' ? 'page' : undefined}
               className={`py-2 transition ${activeSection === 'home' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
             >
@@ -211,7 +220,7 @@ const LandingPage = () => {
             </a>
             <a
               href="#services"
-              onClick={closeMenu}
+              onClick={(e) => handleMobileLinkClick(e, 'services')}
               aria-current={activeSection === 'services' ? 'page' : undefined}
               className={`py-2 transition ${activeSection === 'services' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
             >
@@ -219,7 +228,7 @@ const LandingPage = () => {
             </a>
             <a
               href="#about"
-              onClick={closeMenu}
+              onClick={(e) => handleMobileLinkClick(e, 'about')}
               aria-current={activeSection === 'about' ? 'page' : undefined}
               className={`py-2 transition ${activeSection === 'about' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
             >
@@ -227,7 +236,7 @@ const LandingPage = () => {
             </a>
             <a
               href="#contact"
-              onClick={closeMenu}
+              onClick={(e) => handleMobileLinkClick(e, 'contact')}
               aria-current={activeSection === 'contact' ? 'page' : undefined}
               className={`py-2 transition ${activeSection === 'contact' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
             >
