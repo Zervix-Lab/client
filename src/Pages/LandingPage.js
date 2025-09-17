@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoLinkOutline} from 'react-icons/io5';
+import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoGlobeOutline} from 'react-icons/io5';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
 import homeImage from '../Images/homeImage.webp';
@@ -12,6 +12,7 @@ import branding from '../Images/branding.png'
 import social from '../Images/social.png'
 import software from '../Images/software.png'
 import website from '../Images/website.png'
+import about from '../Images/about.webp'
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -428,8 +429,12 @@ const LandingPage = () => {
        </section>
 
       {/* About Section */}
-      <section id="about" className="scroll-mt-1 pt-20 md:pt-[120px] pb-20 md:pb-32 px-8 bg-[#0a0a0a] text-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+      <section id="about" className="relative scroll-mt-1 pt-20 md:pt-[120px] pb-20 md:pb-32 px-8 bg-[#0a0a0a] text-white overflow-hidden">
+        <div aria-hidden className="absolute inset-0 z-0">
+          <img src={about} alt="About background" className="w-full h-full object-cover opacity-50" />
+          <div className="absolute inset-0 bg-[#0a0a0a]/90" />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto">
           
           
           <div className="grid md:grid-cols-2 gap-12 items-start ">
@@ -529,24 +534,24 @@ const LandingPage = () => {
                 alt="Tharindu Dilshan, CEO"
                 className="w-28 h-28 object-cover rounded-full border-4 border-orange-500 flex-shrink-0"
               />
-              <div className="text-left">
+              <div className="text-center sm:text-left">
                 <h4 className="text-xl font-semibold text-orange-400">A Word from Our CEO</h4>
                 <p className="mt-2 text-gray-300 italic">
-                  “We’re not just building software—we’re shaping experiences. Our passion for innovation and teamwork drives us to push the boundaries of what's possible.”
+                  “We’re not just building digital solutions—we’re shaping experiences. Our passion for blending technology and creativity drives us to push the boundaries of what's possible.”
                 </p>
-                <p className="mt-3 font-semibold text-white text-right">— Tharindu Dilshan, CEO</p>
-                <div className="flex justify-end items-center gap-4 mt-4">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                <p className="mt-3 font-semibold text-white text-center sm:text-right">— Tharindu Ekanayake, CEO</p>
+                <div className="flex justify-center sm:justify-start items-center gap-4 mt-4">
+                  <a href="https://www.linkedin.com/in/tharindu-dilshan-ekanayake-462919195" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
                     <IoLogoLinkedin size={22} />
                   </a>
-                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                  <a href="https://www.facebook.com/tharindu.dilshan.3154" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
                     <IoLogoFacebook size={22} />
                   </a>
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                  <a href="https://www.instagram.com/tharindu_dilshan_ekanayake_/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
                     <IoLogoInstagram size={22} />
                   </a>
-                  <a href="#!" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
-                    <IoLinkOutline size={22} />
+                  <a href="https://tharindudilshanekanayake-8f97816b421e.herokuapp.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                    <IoGlobeOutline size={22} />
                   </a>
                 </div>
               </div>
