@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline} from 'react-icons/io5';
+import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoLinkOutline} from 'react-icons/io5';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
 import homeImage from '../Images/homeImage.webp';
@@ -272,25 +272,29 @@ const LandingPage = () => {
           >
             <span className="text-orange-500">Zervix Lab</span> blends technology and creativity to build modern, user-first solutions and standout designs.
           </motion.p>
+
+          <div className='mt-8 flex flex-row justify-center items-center gap-4'>
+           <motion.a 
+              href="#contact"
+              className="inline-block px-6 py-2.5 text-base md:px-8 md:py-3 md:text-lg font-semibold rounded-xl bg-white text-black shadow-lg hover:bg-gray-300 transition border-2 border-white"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              Get Started
+            </motion.a>
+            <motion.a
+              href="#services"
+              className="inline-block px-6 py-2.5 text-base md:px-8 md:py-3 md:text-lg font-semibold rounded-xl border-2 border-white text-white hover:bg-white/10 transition"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              View Services
+            </motion.a>
+          </div>
           
-          <motion.a 
-            href="#contact"
-            className="mt-8 inline-block px-8 py-3 text-lg font-semibold rounded-xl bg-white text-black shadow-lg hover:bg-gray-300 transition border-2 border-white"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            Get Started
-          </motion.a>
-          <motion.a
-            href="#services"
-            className="mt-4 md:mt-8 md:ml-4 inline-block px-8 py-3 text-lg font-semibold rounded-xl border-2 border-white text-white hover:bg-white/10 transition"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7 }}
-          >
-            View Services
-          </motion.a>
+          
         </div>
         {/* Key Features Bar */}
         <div className="absolute bottom-0 left-0 right-0 w-screen px-3 md:px-6 pb-3 md:pb-6">
@@ -332,7 +336,7 @@ const LandingPage = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="relative scroll-mt-24 min-h-[100svh] px-8 py-16 md:py-24 text-white text-center overflow-hidden flex items-center">
+      <section id="services" className="relative scroll-mt-1 min-h-[100svh] px-8 py-16 md:py-24 text-white text-center overflow-hidden flex items-center">
          {/* Background image + overlay */}
          <div aria-hidden className="absolute inset-0">
            <img src={service} alt="" className="w-full h-full object-cover" />
@@ -342,7 +346,7 @@ const LandingPage = () => {
          {/* Foreground content */}
          <div className="relative z-10 max-w-7xl mx-auto w-full">
           <motion.h3 
-            className="text-3xl font-bold mb-2"
+            className="text-4xl font-bold mb-2"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -424,52 +428,131 @@ const LandingPage = () => {
        </section>
 
       {/* About Section */}
-      <section id="about" className="scroll-mt-24 py-20 px-8 bg-[#0a0a0a] text-white text-center">
-        <motion.h3
-          className="text-3xl font-bold mb-10"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-        >
-          About Us
-        </motion.h3>
-        <motion.div
-          className="max-w-3xl mx-auto text-lg text-gray-300"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-        >
-          <p className="mb-6">
-            Zervix Lab is a passionate software development team crafting unique digital solutions using the latest technologies. Our mission is to deliver quality, creativity, and user-centered designs.
-          </p>
-          <p>
-            From startups to enterprises, we empower businesses to scale and succeed through innovative platforms and digital products.
-          </p>
-        </motion.div>
+      <section id="about" className="scroll-mt-1 pt-20 md:pt-[120px] pb-20 md:pb-32 px-8 bg-[#0a0a0a] text-white overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          
+          
+          <div className="grid md:grid-cols-2 gap-12 items-start ">
+            {/* Left Column: Main Content */}
+            <motion.div 
+              className="text-left"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+            >
+              <h4 className="text-2xl md:text-3xl font-bold mb-6">
+                Driven by Passion, Defined by <span className="text-orange-500">Excellence</span>.
+              </h4>
+              <p className="text-gray-300 text-lg mb-6">
+                Zervix Lab is more than just a software house; we are architects of the digital future. We are a passionate team of developers, designers, and strategists dedicated to crafting unique digital solutions with the latest technologies.
+              </p>
+              <p className="text-gray-300 text-lg mb-10">
+                Our mission is to deliver unparalleled quality, boundless creativity, and intuitive, user-centered designs that empower businesses to scale and succeed.
+              </p>
+              
+              {/* Core Values */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div className="bg-[#111] p-4 rounded-lg border border-white/10">
+                  <IoDiamondOutline className="mx-auto text-3xl text-orange-400 mb-2" />
+                  <h5 className="font-semibold">Quality</h5>
+                  <p className="text-sm text-gray-400">Delivering robust and polished products.</p>
+                </div>
+                <div className="bg-[#111] p-4 rounded-lg border border-white/10">
+                  <IoFlashOutline className="mx-auto text-3xl text-orange-400 mb-2" />
+                  <h5 className="font-semibold">Innovation</h5>
+                  <p className="text-sm text-gray-400">Pushing boundaries with modern tech.</p>
+                </div>
+                <div className="bg-[#111] p-4 rounded-lg border border-white/10">
+                  <IoColorPaletteOutline className="mx-auto text-3xl text-orange-400 mb-2" />
+                  <h5 className="font-semibold">Creativity</h5>
+                  <p className="text-sm text-gray-400">Crafting unique and engaging experiences.</p>
+                </div>
+              </div>
+            </motion.div>
 
-        {/* CEO's Word */}
-        <motion.div
-          className="mt-16 bg-[#111] p-8 rounded-xl shadow-lg max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-        >
-          <img
-            src={ceo}
-            alt="CEO"
-            className="w-32 h-32 object-cover rounded-full border-4 border-orange-500"
-          />
-          <div className="text-left">
-            <h4 className="text-xl font-semibold mb-2 text-orange-400">A Word from Our CEO</h4>
-            <p className="text-gray-300 italic">
-              “At Zervix Lab, we believe in pushing the boundaries of what's possible through passion, innovation, and teamwork. We’re not just building software—we’re shaping experiences.”
-            </p>
-            <p className="mt-2 font-semibold text-white">— Tharindu Dilshan, CEO</p>
+            {/* Right Column: Why Choose Us */}
+            <motion.div
+              className="text-left"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+              custom={1.5}
+            >
+              <h4 className="text-2xl md:text-3xl font-bold mb-6">
+                Why <span className="text-orange-500">Choose Us?</span>
+              </h4>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-orange-500/10 p-2 rounded-full border border-orange-500/30">
+                    <IoPeopleOutline className="text-2xl text-orange-400" />
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-lg">Client-Centric Approach</h5>
+                    <p className="text-gray-400">Your goals are our priority. We collaborate closely with you to ensure the final product exceeds expectations.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-orange-500/10 p-2 rounded-full border border-orange-500/30">
+                    <IoCodeSlashOutline className="text-2xl text-orange-400" />
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-lg">Cutting-Edge Technology</h5>
+                    <p className="text-gray-400">We utilize the latest frameworks and technologies to build scalable, secure, and future-proof solutions.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-orange-500/10 p-2 rounded-full border border-orange-500/30">
+                    <IoChatbubblesOutline className="text-2xl text-orange-400" />
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-lg">Transparent Communication</h5>
+                    <p className="text-gray-400">We believe in clear, consistent communication, keeping you informed at every stage of the project lifecycle.</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+
+          {/* CEO Card - Centered */}
+          <motion.div
+            className="mt-20 md:mt-24 max-w-2xl mx-auto"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+          >
+            <div className="bg-[#111] p-6 rounded-xl shadow-lg border border-white/10 text-center flex flex-col sm:flex-row items-center gap-6">
+              <img
+                src={ceo}
+                alt="Tharindu Dilshan, CEO"
+                className="w-28 h-28 object-cover rounded-full border-4 border-orange-500 flex-shrink-0"
+              />
+              <div className="text-left">
+                <h4 className="text-xl font-semibold text-orange-400">A Word from Our CEO</h4>
+                <p className="mt-2 text-gray-300 italic">
+                  “We’re not just building software—we’re shaping experiences. Our passion for innovation and teamwork drives us to push the boundaries of what's possible.”
+                </p>
+                <p className="mt-3 font-semibold text-white text-right">— Tharindu Dilshan, CEO</p>
+                <div className="flex justify-end items-center gap-4 mt-4">
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                    <IoLogoLinkedin size={22} />
+                  </a>
+                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                    <IoLogoFacebook size={22} />
+                  </a>
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                    <IoLogoInstagram size={22} />
+                  </a>
+                  <a href="#!" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition">
+                    <IoLinkOutline size={22} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Contact Section */}
