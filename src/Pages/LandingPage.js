@@ -5,6 +5,13 @@ import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpeg';
 import homeImage from '../Images/homeImage.webp';
 import homeImage2 from '../Images/homeImage2.webp';
+import service from '../Images/services.webp'
+import uiux from '../Images/uiux.png'
+import marketing from '../Images/marketing.png'
+import branding from '../Images/branding.png'
+import social from '../Images/social.png'
+import software from '../Images/software.png'
+import website from '../Images/website.png'
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -20,6 +27,22 @@ const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   // highlight active section in nav
   const [activeSection, setActiveSection] = useState('home');
+  // Add a tab for Services
+  const [serviceTab, setServiceTab] = useState('it');
+
+  // Data for both tabs
+  const serviceData = React.useMemo(() => ({
+    it: [
+      { title: 'UI/UX Design', desc: 'Wireframes, prototypes, and beautiful, user-first design systems.', image: uiux },
+      { title: 'Software Development', desc: 'Custom solutions tailored to your business goals.', image: software },
+      { title: 'Website Development', desc: 'Fast, SEO-friendly websites with modern stacks.', image: website },
+    ],
+    graphic: [
+      { title: 'Branding & Identity', desc: 'Logos, color palettes, typography, and brand systems.', image: branding },
+      { title: 'Social Media Graphics', desc: 'On-brand creatives optimized for every platform.', image: social },
+      { title: 'Marketing Assets', desc: 'Banners, posters, slide decks, and more.', image: marketing },
+    ],
+  }), []);
 
   // --- Background Slideshow State ---
   const images = React.useMemo(() => [homeImage, homeImage2], []);
@@ -309,38 +332,96 @@ const LandingPage = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="scroll-mt-24 py-20 px-8 bg-[#19191A] text-white text-center ">
-        <motion.h3 
-          className="text-3xl font-bold mb-10"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-        >
-          Our Services
-        </motion.h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          {[
-            { title: 'Web Development', desc: 'Building responsive and scalable websites tailored to your business needs.' },
-            { title: 'Mobile App Development', desc: 'Crafting seamless mobile applications for iOS and Android platforms.' },
-            { title: "Desktop Application Development", desc: "Developing powerful desktop apps for Windows, Mac, and Linux." },
-            { title: 'UI/UX Design', desc: 'Designing user-first experiences that are both functional and beautiful.' }
-          ].map((service, i) => (
-            <motion.div
-              key={i}
-              className="bg-[#101112] border border-white/10 p-6 rounded-xl shadow-md hover:shadow-white/10 hover:border-white/20 transition h-full flex flex-col"
-              custom={i + 1} // clean stagger: 0.2s, 0.4s, 0.6s, 0.8s
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-            >
-              <h4 className="text-xl font-semibold mb-2">{service.title}</h4>
-              <p className="text-gray-400">{service.desc}</p>
-            </motion.div>
-          ))}
+      <section id="services" className="relative scroll-mt-24 min-h-[100svh] px-8 py-16 md:py-24 text-white text-center overflow-hidden flex items-center">
+         {/* Background image + overlay */}
+         <div aria-hidden className="absolute inset-0">
+           <img src={service} alt="" className="w-full h-full object-cover" />
+           <div className="absolute inset-0 bg-[#19191A]/90" />
+         </div>
+
+         {/* Foreground content */}
+         <div className="relative z-10 max-w-7xl mx-auto w-full">
+          <motion.h3 
+            className="text-3xl font-bold mb-2"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+          >
+            Our Services
+          </motion.h3>
+          <motion.p
+            className="text-gray-400 text-base"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            custom={1.5}
+          >
+            Explore the solutions we offer to elevate your business.
+          </motion.p>
+
+          {/* Tabs: IT | Graphic */}
+          <div className="mt-10 mb-10 flex justify-center">
+            <div className="inline-flex items-center gap-1 rounded-xl bg-[#101112] border border-white/10 p-1">
+              <button
+                type="button"
+                aria-pressed={serviceTab === 'it'}
+                onClick={() => setServiceTab('it')}
+                className={`px-4 py-2 rounded-lg text-sm md:text-base transition
+                  ${serviceTab === 'it'
+                    ? 'text-orange-500 bg-white/10 ring-1 ring-orange-500/40'
+                    : 'text-white/80 hover:text-white'}`}
+              >
+                IT Services
+              </button>
+              <button
+                type="button"
+                aria-pressed={serviceTab === 'graphic'}
+                onClick={() => setServiceTab('graphic')}
+                className={`px-4 py-2 rounded-lg text-sm md:text-base transition
+                  ${serviceTab === 'graphic'
+                    ? 'text-orange-500 bg-white/10 ring-1 ring-orange-500/40'
+                    : 'text-white/80 hover:text-white'}`}
+              >
+                Graphic Services
+              </button>
+            </div>
+          </div>
+
+          {/* Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+           {serviceData[serviceTab].map((svc, i) => (
+             <motion.div
+               key={`${serviceTab}-${i}`}
+               className="group relative rounded-xl border border-white/10 bg-[#0f1011]/70 backdrop-blur-sm shadow-lg shadow-black/20 hover:shadow-black/40 transition-all duration-300 h-full overflow-hidden"
+               custom={i + 1}
+               initial="hidden"
+               whileInView="visible"
+               viewport={{ once: true }}
+               variants={fadeIn}
+               whileHover={{ y: -6, scale: 1.02 }}
+               transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+             >
+               {/* subtle hover glow */}
+               <div className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                 style={{ background: 'radial-gradient(380px at 50% 0%, rgba(249,115,22,0.18), transparent 70%)' }}
+               />
+               <div className="relative flex flex-col h-full">
+                 <div className="relative h-40 w-full overflow-hidden">
+                   <img src={svc.image} alt={svc.title} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 border-2 border-transparent group-hover:border-orange-500" />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+                 </div>
+                 <div className="p-5 flex-grow flex flex-col text-left">
+                   <h4 className="text-lg md:text-xl font-semibold text-white mb-1">{svc.title}</h4>
+                   <p className="text-orange-400 text-sm flex-grow">{svc.desc}</p>
+                 </div>
+               </div>
+             </motion.div>
+           ))}
+         </div>
         </div>
-      </section>
+       </section>
 
       {/* About Section */}
       <section id="about" className="scroll-mt-24 py-20 px-8 bg-[#0a0a0a] text-white text-center">
