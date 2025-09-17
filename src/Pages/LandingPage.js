@@ -126,8 +126,8 @@ const LandingPage = () => {
       {/* Header (overlay on hero) */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-black/70 backdrop-blur-md' : 'bg-transparent'
-        }`}
+          scrolled && !menuOpen ? 'bg-black/70 backdrop-blur-md' : ''
+        } ${menuOpen ? 'bg-black' : 'md:bg-transparent'}`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 md:h-24">
           <div className="flex items-center gap-3">
@@ -199,7 +199,7 @@ const LandingPage = () => {
           {/* Panel */}
           <nav
             id="mobile-menu"
-            className={`fixed top-0 right-0 z-50 h-full w-72 bg-[#0b0b0b]/95 backdrop-blur-md border-l border-white/10 pt-20 px-6 flex flex-col gap-4 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`fixed top-0 right-0 z-50 h-full w-72 bg-black border-l border-white/10 pt-20 px-6 flex flex-col gap-4 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <a
               href="#home"
