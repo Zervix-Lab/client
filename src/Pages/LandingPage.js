@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import toast, { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoGlobeOutline, IoLogoWhatsapp, IoCallOutline, IoMailOutline} from 'react-icons/io5';
+import { IoDiamondOutline, IoFlashOutline, IoColorPaletteOutline, IoPeopleOutline, IoCodeSlashOutline, IoChatbubblesOutline,  IoLogoLinkedin, IoLogoFacebook, IoLogoInstagram, IoGlobeOutline, IoLogoWhatsapp, IoCallOutline, IoMailOutline, IoRocketOutline, IoShieldCheckmarkOutline, IoStarOutline, IoArrowForwardOutline, IoCheckmarkCircleOutline } from 'react-icons/io5';
 import logo from '../Images/logo.png';
 import ceo from '../Images/ceo.jpg';
 import homeImage from '../Images/homeImage.webp';
@@ -16,6 +16,7 @@ import social from '../Images/social.png'
 import software from '../Images/software.png'
 import website from '../Images/website.png'
 import about from '../Images/about.webp'
+import SmartyMenu from '../Images/SmartyMenu.png'
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -100,9 +101,49 @@ const LandingPage = () => {
     return () => (document.body.style.overflow = original);
   }, [menuOpen]);
 
+  // Products data
+  const productsData = React.useMemo(() => [
+    {
+      id: 1,
+      name: 'Smarty Menu',
+      tagline: 'QR Code Restaurant Ordering System',
+      description: 'A complete restaurant management solution with QR code ordering. Customers scan & order from their phones while you manage everything from a powerful desktop admin panel.',
+      features: ['QR Code Ordering', 'Desktop Admin Panel', 'Top Dishes & Customer Analytics', 'Daily & Weekly Reports', 'Easy Menu Management'],
+      status: 'Available',
+      image: SmartyMenu,
+      icon: <IoRocketOutline className="text-4xl" />,
+      gradient: 'from-orange-500 to-amber-500',
+      bgGlow: 'rgba(249, 115, 22, 0.15)',
+    },
+    {
+      id: 2,
+      name: 'ZervixCRM',
+      tagline: 'Customer Relationship Manager',
+      description: 'Streamline your customer interactions with our powerful CRM. Track leads, manage pipelines, and boost conversions with AI-powered insights.',
+      features: ['Lead Tracking', 'Sales Pipeline', 'Email Integration', 'AI Insights'],
+      status: 'Coming Soon',
+      image: null,
+      icon: <IoPeopleOutline className="text-4xl" />,
+      gradient: 'from-blue-500 to-cyan-500',
+      bgGlow: 'rgba(59, 130, 246, 0.15)',
+    },
+    {
+      id: 3,
+      name: 'ZervixHRM',
+      tagline: 'Human Resource Management',
+      description: 'Complete HR solution for modern businesses. From attendance tracking to payroll management, handle all HR tasks efficiently.',
+      features: ['Attendance System', 'Payroll Management', 'Leave Management', 'Performance Reviews'],
+      status: 'Coming Soon',
+      image: null,
+      icon: <IoShieldCheckmarkOutline className="text-4xl" />,
+      gradient: 'from-purple-500 to-pink-500',
+      bgGlow: 'rgba(168, 85, 247, 0.15)',
+    },
+  ], []);
+
   // Track which section is in view
   useEffect(() => {
-    const ids = ['home', 'services', 'about', 'contact'];
+    const ids = ['home', 'products', 'services', 'about', 'contact'];
     const els = ids
       .map(id => document.getElementById(id))
       .filter(Boolean);
@@ -172,7 +213,7 @@ const LandingPage = () => {
               Home
             </a>
             <a
-              href='/products'
+              href='#products'
               aria-current={activeSection === 'products' ? 'page' : undefined}
               className={`transition ${activeSection === 'products' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
             >
@@ -247,9 +288,10 @@ const LandingPage = () => {
             Home
           </a>
            <a
-              href='/products'
+              href='#products'
+              onClick={(e) => handleMobileLinkClick(e, 'products')}
               aria-current={activeSection === 'products' ? 'page' : undefined}
-              className={`transition ${activeSection === 'products' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+              className={`py-2 transition ${activeSection === 'products' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
             >
               Products
                </a>
@@ -420,6 +462,166 @@ const LandingPage = () => {
                 </div>
               </div>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Products Section */}
+      <section id="products" className="relative scroll-mt-1 min-h-[100svh] px-6 md:px-8 py-20 md:py-28 bg-[#0a0a0a] text-white overflow-hidden flex items-center">
+        {/* Background decorations */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto w-full">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-sm mb-4"
+            >
+              <IoStarOutline className="text-lg" />
+              <span>Our Products</span>
+            </motion.div>
+            <motion.h3
+              className="text-4xl md:text-5xl font-bold mb-4"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+              custom={0.5}
+            >
+              Powerful <span className="text-orange-500">Solutions</span> for Your Business
+            </motion.h3>
+            <motion.p
+              className="text-gray-400 text-lg max-w-2xl mx-auto"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+              custom={1}
+            >
+              Discover our suite of enterprise-grade products designed to streamline operations and accelerate growth.
+            </motion.p>
+          </div>
+
+          {/* Products Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            {productsData.map((product, index) => (
+              <motion.div
+                key={product.id}
+                className="group relative"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeIn}
+                custom={index + 1}
+              >
+                {/* Card */}
+                <motion.div
+                  className="relative h-full rounded-2xl border border-white/10 bg-[#111]/80 backdrop-blur-sm overflow-hidden"
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                >
+                  {/* Hover glow effect */}
+                  <div
+                    className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: `radial-gradient(600px at 50% 0%, ${product.bgGlow}, transparent 70%)` }}
+                  />
+                  
+                  {/* Gradient top bar */}
+                  <div className={`h-1 bg-gradient-to-r ${product.gradient}`} />
+
+                  <div className="relative p-6 md:p-8">
+                    {/* Logo/Icon & Status Badge */}
+                    <div className="flex items-start justify-between mb-6">
+                      {product.image ? (
+                        <div className="p-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
+                          <img 
+                            src={product.image} 
+                            alt={`${product.name} logo`} 
+                            className="w-12 h-12 object-contain rounded-lg" 
+                          />
+                        </div>
+                      ) : (
+                        <div className={`p-3 rounded-xl bg-gradient-to-br ${product.gradient} text-white shadow-lg`}>
+                          {product.icon}
+                        </div>
+                      )}
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        product.status === 'Available' 
+                          ? 'bg-green-500/10 text-green-400 border border-green-500/20' 
+                          : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
+                      }`}>
+                        {product.status}
+                      </span>
+                    </div>
+
+                    {/* Product Name & Tagline */}
+                    <h4 className="text-2xl font-bold text-white mb-1">{product.name}</h4>
+                    <p className="text-orange-400 text-sm font-medium mb-4">{product.tagline}</p>
+
+                    {/* Description */}
+                    <p className="text-gray-400 text-sm leading-relaxed mb-6">{product.description}</p>
+
+                    {/* Features List */}
+                    <div className="space-y-2 mb-8">
+                      {product.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-sm text-gray-300">
+                          <IoCheckmarkCircleOutline className="text-orange-400 flex-shrink-0" />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* CTA Button */}
+                    <motion.button
+                      className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all ${
+                        product.status === 'Available'
+                          ? `bg-gradient-to-r ${product.gradient} text-white hover:shadow-lg hover:shadow-orange-500/25`
+                          : 'bg-white/5 text-gray-400 border border-white/10 cursor-not-allowed'
+                      }`}
+                      whileHover={product.status === 'Available' ? { scale: 1.02 } : {}}
+                      whileTap={product.status === 'Available' ? { scale: 0.98 } : {}}
+                      disabled={product.status !== 'Available'}
+                    >
+                      {product.status === 'Available' ? (
+                        <>
+                          <span>Learn More</span>
+                          <IoArrowForwardOutline className="text-lg" />
+                        </>
+                      ) : (
+                        <span>Coming Soon</span>
+                      )}
+                    </motion.button>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <motion.div
+            className="mt-16 text-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            custom={4}
+          >
+            <p className="text-gray-400 mb-6">Need a custom solution for your business?</p>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition-all hover:shadow-lg"
+            >
+              <span>Let's Build Together</span>
+              <IoArrowForwardOutline className="text-lg" />
+            </a>
           </motion.div>
         </div>
       </section>
@@ -762,6 +964,7 @@ const LandingPage = () => {
               <h5 className="font-bold text-white text-lg mb-4">Quick Links</h5>
               <ul className="space-y-3 text-sm">
                 <li><a href="#home" className="hover:text-orange-500 transition">Home</a></li>
+                <li><a href="#products" className="hover:text-orange-500 transition">Products</a></li>
                 <li><a href="#services" className="hover:text-orange-500 transition">Services</a></li>
                 <li><a href="#about" className="hover:text-orange-500 transition">About</a></li>
                 <li><a href="#contact" className="hover:text-orange-500 transition">Contact</a></li>
