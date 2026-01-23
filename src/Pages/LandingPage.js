@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import toast, { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -26,6 +27,7 @@ const fadeIn = {
 };
 
 const LandingPage = () => {
+  const location = useLocation();
   const [state, handleSubmit] = useForm("mwpndnbw");
   const formRef = useRef();
   const [scrolled, setScrolled] = useState(false);
@@ -34,6 +36,23 @@ const LandingPage = () => {
   const [activeSection, setActiveSection] = useState('home');
   // Add a tab for Services
   const [serviceTab, setServiceTab] = useState('it');
+
+  // Handle scroll to section BEFORE browser paints - runs synchronously
+  useLayoutEffect(() => {
+    if (location.hash) {
+      const sectionId = location.hash.replace('#', '');
+      const element = document.getElementById(sectionId);
+      if (element) {
+        // Disable smooth scrolling temporarily and scroll instantly
+        document.documentElement.style.scrollBehavior = 'auto';
+        element.scrollIntoView();
+        // Re-enable smooth scrolling after
+        requestAnimationFrame(() => {
+          document.documentElement.style.scrollBehavior = '';
+        });
+      }
+    }
+  }, [location.hash]);
 
   // Data for both tabs
   const serviceData = React.useMemo(() => ({
@@ -153,6 +172,13 @@ const LandingPage = () => {
               Home
             </a>
             <a
+              href='/products'
+              aria-current={activeSection === 'products' ? 'page' : undefined}
+              className={`transition ${activeSection === 'products' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              Products
+               </a>
+            <a
               href="#services"
               aria-current={activeSection === 'services' ? 'page' : undefined}
               className={`transition ${activeSection === 'services' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
@@ -173,6 +199,7 @@ const LandingPage = () => {
             >
               Contact
             </a>
+            
           </nav>
 
           {/* Mobile menu button */}
@@ -219,6 +246,13 @@ const LandingPage = () => {
           >
             Home
           </a>
+           <a
+              href='/products'
+              aria-current={activeSection === 'products' ? 'page' : undefined}
+              className={`transition ${activeSection === 'products' ? 'text-orange-500' : 'text-white/90 hover:text-white'}`}
+            >
+              Products
+               </a>
           <a
             href="#services"
             onClick={(e) => handleMobileLinkClick(e, 'services')}
@@ -243,6 +277,7 @@ const LandingPage = () => {
           >
             Contact
           </a>
+           
 
           {/* Mobile Nav Contact Info */}
           <div className="mt-auto pb-8">
