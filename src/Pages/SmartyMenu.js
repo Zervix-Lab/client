@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   IoArrowBackOutline,
   IoDownloadOutline,
@@ -7,20 +7,36 @@ import {
   IoDesktopOutline,
   IoStatsChartOutline,
   IoRestaurantOutline,
+  IoFolderOpenOutline,
+  IoCloudDownloadOutline,
+  IoPhonePortraitOutline,
+  IoCloseOutline,
+  IoLogoWhatsapp,
+  IoMailOutline,
 } from 'react-icons/io5';
 
 import bgSmarty from '../Images/bg-smarty.webp';
 import smartyLogo from '../Images/SmartyMenu.png';
 
 export default function SmartyMenu() {
+  const navigate = useNavigate();
+  const [contactOpen, setContactOpen] = useState(false);
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
-  // Google Drive direct-download endpoint (best-effort).
-  // Note: Drive may still show a confirmation page for large/exe files.
-  const driveFileId = '17qu4Ht7j7BCRKe9kDpMo4jCmoKOK-FeU';
-  const downloadHref = `https://drive.google.com/uc?export=download&id=${driveFileId}`;
+  useEffect(() => {
+    if (!contactOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setContactOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [contactOpen]);
+
+  // Direct ZIP download (S3)
+  const downloadHref = 'https://application-mergx.s3.ap-south-1.amazonaws.com/SmartyMenu.zip';
 
   return (
     <div className="min-h-screen text-white">
@@ -88,37 +104,20 @@ export default function SmartyMenu() {
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 font-semibold text-black hover:brightness-110 transition shadow-lg shadow-orange-500/20"
                 >
                   <IoDownloadOutline className="text-xl" />
-                  <span>Download</span>
+                  <span>Download Demo</span>
                 </a>
-                <a
-                  href="https://wa.me/94768849340"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => setContactOpen(true)}
                   className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white hover:bg-white/10 transition"
                 >
-                  Request a Demo
-                </a>
+                  Buy Now
+                </button>
               </div>
 
               <p className="mt-3 text-xs text-white/50">
-                If Google Drive shows a confirmation screen, click <span className="font-semibold">Download anyway</span>.
+                Download will start immediately. If it doesn’t, open the link in a new tab and try again.
               </p>
-
-              <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
-                <h3 className="text-lg font-bold">Install & Setup</h3>
-                <ol className="mt-3 space-y-2 text-sm text-white/75 list-decimal pl-5">
-                  <li>Click the <span className="font-semibold text-white">Download</span> button.</li>
-                  <li>After download, <span className="font-semibold text-white">extract</span> the ZIP file (Right click → Extract All).</li>
-                  <li>Open the extracted folder and run <span className="font-semibold text-white">Smarty Menu Setup</span> to install.</li>
-                  <li>
-                    For mobile: use your phone camera (or any QR scanner) to scan the QR code.
-                    The QR code file is included inside the extracted ZIP.
-                  </li>
-                </ol>
-                <p className="mt-3 text-xs text-white/50">
-                  Tip: If Windows shows a security warning, choose “More info” → “Run anyway” (only if you trust the source).
-                </p>
-              </div>
             </div>
 
             {/* Visual card */}
@@ -154,6 +153,135 @@ export default function SmartyMenu() {
               </div>
             </div>
           </div>
+
+          {/* Bottom: Install Steps */}
+          <div className="mt-14 md:mt-20">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div>
+                <h3 className="text-2xl md:text-3xl font-extrabold">
+                  Install in <span className="text-orange-500">4 Steps</span>
+                </h3>
+                <p className="mt-2 text-white/70 max-w-2xl">
+                  Download the ZIP, install the desktop app, then scan the QR code on mobile to start ordering.
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                
+                <button
+                  type="button"
+                  onClick={() => setContactOpen(true)}
+                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition"
+                >
+                  Contact Us
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <StepCard
+                step="01"
+                icon={<IoCloudDownloadOutline className="text-xl" />}
+                title="Click Download"
+                desc="Open the download link and save the ZIP file."
+              />
+              <StepCard
+                step="02"
+                icon={<IoFolderOpenOutline className="text-xl" />}
+                title="Extract the ZIP"
+                desc="Right‑click the ZIP → Extract All → choose a folder."
+              />
+              <StepCard
+                step="03"
+                icon={<IoDesktopOutline className="text-xl" />}
+                title="Install Setup"
+                desc="Run “Smarty Menu Setup” from the extracted folder to install."
+              />
+              <StepCard
+                step="04"
+                icon={<IoPhonePortraitOutline className="text-xl" />}
+                title="Scan QR (Mobile)"
+                desc="Use your phone camera/QR scanner. The QR code is included inside the ZIP."
+              />
+            </div>
+
+            
+          </div>
+
+          {/* Contact modal */}
+          {contactOpen && (
+            <div className="fixed inset-0 z-[60]">
+              <div
+                className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                onClick={() => setContactOpen(false)}
+                aria-hidden
+              />
+              <div className="relative h-full flex items-center justify-center px-6">
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Contact options"
+                  className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0f0f10]/95 backdrop-blur shadow-2xl"
+                >
+                  <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+                    <div>
+                      <div className="text-lg font-bold text-white">Contact Us</div>
+                      <div className="text-sm text-white/60">Choose how you’d like to reach us</div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setContactOpen(false)}
+                      className="h-9 w-9 rounded-xl border border-white/10 bg-white/5 text-white/80 hover:text-white hover:bg-white/10 transition inline-flex items-center justify-center"
+                      aria-label="Close"
+                    >
+                      <IoCloseOutline className="text-xl" />
+                    </button>
+                  </div>
+
+                  <div className="p-5 space-y-3">
+                    <a
+                      href="https://wa.me/94768849340"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 hover:bg-white/10 transition"
+                    >
+                      <span className="inline-flex items-center gap-3">
+                        <span className="h-10 w-10 rounded-xl bg-green-500/10 border border-green-500/20 text-green-300 flex items-center justify-center">
+                          <IoLogoWhatsapp className="text-xl" />
+                        </span>
+                        <span>
+                          <span className="block font-semibold text-white">WhatsApp</span>
+                          <span className="block text-sm text-white/60">Chat with our team</span>
+                        </span>
+                      </span>
+                      <span className="text-white/50">→</span>
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setContactOpen(false);
+                        navigate('/#contact');
+                      }}
+                      className="w-full inline-flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 hover:bg-white/10 transition text-left"
+                    >
+                      <span className="inline-flex items-center gap-3">
+                        <span className="h-10 w-10 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-300 flex items-center justify-center">
+                          <IoMailOutline className="text-xl" />
+                        </span>
+                        <span>
+                          <span className="block font-semibold text-white">Contact Form</span>
+                          <span className="block text-sm text-white/60">Send a message from our website</span>
+                        </span>
+                      </span>
+                      <span className="text-white/50">→</span>
+                    </button>
+                  </div>
+
+                  
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -172,6 +300,22 @@ function Benefit({ icon, title, desc }) {
           <div className="text-sm text-white/65">{desc}</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function StepCard({ step, icon, title, desc }) {
+  return (
+    <div className="group relative rounded-2xl border border-white/10 bg-white/5 p-5 overflow-hidden">
+      <div className="absolute -top-16 -right-16 h-32 w-32 rounded-full bg-orange-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="flex items-start justify-between gap-3">
+        <div className="h-10 w-10 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-300 flex items-center justify-center">
+          {icon}
+        </div>
+        <div className="text-xs font-semibold tracking-widest text-white/45">{step}</div>
+      </div>
+      <div className="mt-4 font-bold text-white">{title}</div>
+      <div className="mt-1 text-sm text-white/70 leading-relaxed">{desc}</div>
     </div>
   );
 }
