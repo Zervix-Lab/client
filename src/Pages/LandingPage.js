@@ -592,7 +592,7 @@ const LandingPage = () => {
                     >
                       {product.status === 'Available' ? (
                         <>
-                          <span>Learn More</span>
+                          <span>See More</span>
                           <IoArrowForwardOutline className="text-lg" />
                         </>
                       ) : (
