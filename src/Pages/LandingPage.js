@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import toast, { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -29,6 +29,7 @@ const fadeIn = {
 
 const LandingPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [state, handleSubmit] = useForm("mwpndnbw");
   const formRef = useRef();
   const [scrolled, setScrolled] = useState(false);
@@ -588,6 +589,10 @@ const LandingPage = () => {
                       }`}
                       whileHover={product.status === 'Available' ? { scale: 1.02 } : {}}
                       whileTap={product.status === 'Available' ? { scale: 0.98 } : {}}
+                      onClick={() => {
+                        if (product.status !== 'Available') return;
+                        if (product.name === 'Smarty Menu') navigate('/smartymenu');
+                      }}
                       disabled={product.status !== 'Available'}
                     >
                       {product.status === 'Available' ? (
