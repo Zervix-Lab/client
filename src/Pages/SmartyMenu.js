@@ -24,12 +24,12 @@ export default function SmartyMenu() {
 
   // SEO Meta Tags
   useEffect(() => {
-    // Page Title
-    document.title = 'Smarty Menu | QR Code Restaurant Ordering System | ZervixLab';
+    // Page Title - Optimized for search
+    document.title = 'QR Code Ordering System for Restaurants | Digital Menu $425 | Smarty Menu';
 
-    // Meta Description
+    // Meta Description - Optimized for CTR
     const metaDescription = document.querySelector('meta[name="description"]');
-    const seoDescription = 'Smarty Menu - Modern QR code ordering system for restaurants. Customers scan & order from their phone. Manage menus, track orders, view analytics & daily reports. $425 one-time + $25/month.';
+    const seoDescription = '⭐ Best QR code ordering system for restaurants & cafes. Customers scan QR → browse menu → order instantly. Menu management, order tracking, analytics dashboard. Only $425 + $25/mo. Free demo available!';
     if (metaDescription) {
       metaDescription.setAttribute('content', seoDescription);
     }
@@ -41,15 +41,18 @@ export default function SmartyMenu() {
       metaKeywords.name = 'keywords';
       document.head.appendChild(metaKeywords);
     }
-    metaKeywords.content = 'QR code ordering system, restaurant ordering system, QR menu, digital menu, contactless ordering, restaurant management software, table ordering system, mobile ordering, restaurant POS, menu management, Sri Lanka restaurant software, Smarty Menu, ZervixLab';
+    metaKeywords.content = 'QR code ordering system, QR ordering system, restaurant ordering system, QR menu system, digital menu system, restaurant menu system, contactless ordering system, QR code menu for restaurants, table ordering system, mobile ordering system, restaurant POS system, menu management software, best restaurant software, restaurant QR code system, cafe ordering system, food ordering software, Sri Lanka restaurant software, Smarty Menu, ZervixLab';
 
     // Open Graph Tags
     const ogTags = [
-      { property: 'og:title', content: 'Smarty Menu | QR Code Restaurant Ordering System' },
+      { property: 'og:title', content: 'QR Code Ordering System for Restaurants | $425 | Smarty Menu' },
       { property: 'og:description', content: seoDescription },
       { property: 'og:type', content: 'product' },
-      { property: 'og:url', content: 'https://zervixlab.com/smarty-menu' },
+      { property: 'og:url', content: 'https://zervixlab.com/smartymenu' },
       { property: 'og:site_name', content: 'ZervixLab' },
+      { property: 'og:image', content: 'https://zervixlab.com/smarty-menu-og.png' },
+      { property: 'og:price:amount', content: '425.00' },
+      { property: 'og:price:currency', content: 'USD' },
     ];
 
     ogTags.forEach(({ property, content }) => {
@@ -65,8 +68,11 @@ export default function SmartyMenu() {
     // Twitter Card Tags
     const twitterTags = [
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'Smarty Menu | QR Code Restaurant Ordering System' },
+      { name: 'twitter:title', content: 'QR Code Ordering System | Restaurant Menu System | $425' },
       { name: 'twitter:description', content: seoDescription },
+      { name: 'twitter:image', content: 'https://zervixlab.com/smarty-menu-og.png' },
+      { name: 'twitter:label1', content: 'Price' },
+      { name: 'twitter:data1', content: '$425 + $25/month' },
     ];
 
     twitterTags.forEach(({ name, content }) => {
@@ -86,7 +92,7 @@ export default function SmartyMenu() {
       canonical.rel = 'canonical';
       document.head.appendChild(canonical);
     }
-    canonical.href = 'https://zervixlab.com/smarty-menu';
+    canonical.href = 'https://zervixlab.com/smartymenu';
 
     // Google Structured Data (JSON-LD) - Product Schema
     let jsonLdScript = document.querySelector('script[data-schema="smarty-menu"]');
@@ -195,8 +201,8 @@ export default function SmartyMenu() {
             {
               '@type': 'ListItem',
               position: 3,
-              name: 'Smarty Menu',
-              item: 'https://zervixlab.com/smarty-menu',
+              name: 'Smarty Menu - QR Ordering System',
+              item: 'https://zervixlab.com/smartymenu',
             },
           ],
         },
@@ -205,26 +211,42 @@ export default function SmartyMenu() {
           mainEntity: [
             {
               '@type': 'Question',
-              name: 'What is Smarty Menu?',
+              name: 'What is a QR code ordering system for restaurants?',
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Smarty Menu is a modern QR code ordering system for restaurants. Customers can scan a QR code, browse your menu, and place orders directly from their phone.',
+                text: 'A QR code ordering system allows restaurant customers to scan a QR code on their table, view the digital menu on their phone, and place orders directly without waiting for a waiter. Smarty Menu is a complete QR ordering solution with menu management, order tracking, and analytics.',
               },
             },
             {
               '@type': 'Question',
-              name: 'How much does Smarty Menu cost?',
+              name: 'How much does a restaurant menu system cost?',
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Smarty Menu costs $425 as a one-time payment plus $25 per month for updates and support.',
+                text: 'Smarty Menu restaurant ordering system costs $425 as a one-time setup fee plus $25 per month for updates, support, and cloud hosting. This includes the admin panel, QR code generation, and mobile ordering interface.',
               },
             },
             {
               '@type': 'Question',
-              name: 'What features does Smarty Menu include?',
+              name: 'What features are included in Smarty Menu QR ordering system?',
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Smarty Menu includes QR code ordering, menu management, order tracking, analytics dashboard, daily and weekly reports, and a powerful admin panel.',
+                text: 'Smarty Menu includes: QR code table ordering, digital menu management, real-time order tracking, kitchen display system, analytics dashboard with top dishes and sales reports, daily/weekly revenue reports, and a powerful admin panel.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How does QR code ordering work for restaurants?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Customers scan the QR code placed on their table using their smartphone camera. This opens the digital menu where they can browse items, customize orders, and submit. The order appears instantly on the admin panel and kitchen display for processing.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Is Smarty Menu available in Sri Lanka?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Yes! Smarty Menu is developed by ZervixLab in Sri Lanka and is available for restaurants, cafes, and food businesses worldwide. Contact us via WhatsApp at +94768849340 for a demo.',
               },
             },
           ],
