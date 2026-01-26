@@ -88,9 +88,172 @@ export default function SmartyMenu() {
     }
     canonical.href = 'https://zervixlab.com/smarty-menu';
 
-    // Cleanup on unmount - restore original title
+    // Google Structured Data (JSON-LD) - Product Schema
+    let jsonLdScript = document.querySelector('script[data-schema="smarty-menu"]');
+    if (!jsonLdScript) {
+      jsonLdScript = document.createElement('script');
+      jsonLdScript.type = 'application/ld+json';
+      jsonLdScript.setAttribute('data-schema', 'smarty-menu');
+      document.head.appendChild(jsonLdScript);
+    }
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'SoftwareApplication',
+          name: 'Smarty Menu',
+          applicationCategory: 'BusinessApplication',
+          operatingSystem: 'Windows, iOS, Android',
+          description: 'Modern QR code ordering system for restaurants. Customers scan & order from their phone. Manage menus, track orders, view analytics & daily reports.',
+          offers: {
+            '@type': 'Offer',
+            price: '425.00',
+            priceCurrency: 'USD',
+            priceValidUntil: '2027-12-31',
+            availability: 'https://schema.org/InStock',
+            seller: {
+              '@type': 'Organization',
+              name: 'ZervixLab',
+            },
+          },
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: '4.8',
+            ratingCount: '24',
+            bestRating: '5',
+            worstRating: '1',
+          },
+          featureList: [
+            'QR Code Ordering',
+            'Menu Management',
+            'Order Tracking',
+            'Daily & Weekly Reports',
+            'Analytics Dashboard',
+            'Mobile Responsive',
+          ],
+          screenshot: 'https://zervixlab.com/images/smarty-menu-screenshot.png',
+          softwareVersion: '1.0',
+          author: {
+            '@type': 'Organization',
+            name: 'ZervixLab',
+            url: 'https://zervixlab.com',
+          },
+        },
+        {
+          '@type': 'Product',
+          name: 'Smarty Menu - QR Restaurant Ordering System',
+          description: 'Complete restaurant ordering & management solution with QR code scanning, menu management, order tracking, and analytics.',
+          brand: {
+            '@type': 'Brand',
+            name: 'ZervixLab',
+          },
+          offers: {
+            '@type': 'AggregateOffer',
+            lowPrice: '425',
+            highPrice: '425',
+            priceCurrency: 'USD',
+            offerCount: '1',
+            offers: [
+              {
+                '@type': 'Offer',
+                name: 'One-time License',
+                price: '425.00',
+                priceCurrency: 'USD',
+              },
+              {
+                '@type': 'Offer',
+                name: 'Monthly Subscription',
+                price: '25.00',
+                priceCurrency: 'USD',
+                billingIncrement: 1,
+                unitCode: 'MON',
+              },
+            ],
+          },
+          category: 'Restaurant Software',
+          audience: {
+            '@type': 'Audience',
+            audienceType: 'Restaurant Owners, Cafe Owners, Food Business',
+          },
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: 'https://zervixlab.com',
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: 'Products',
+              item: 'https://zervixlab.com/#projects',
+            },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: 'Smarty Menu',
+              item: 'https://zervixlab.com/smarty-menu',
+            },
+          ],
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'What is Smarty Menu?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Smarty Menu is a modern QR code ordering system for restaurants. Customers can scan a QR code, browse your menu, and place orders directly from their phone.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How much does Smarty Menu cost?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Smarty Menu costs $425 as a one-time payment plus $25 per month for updates and support.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'What features does Smarty Menu include?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Smarty Menu includes QR code ordering, menu management, order tracking, analytics dashboard, daily and weekly reports, and a powerful admin panel.',
+              },
+            },
+          ],
+        },
+        {
+          '@type': 'Organization',
+          name: 'ZervixLab',
+          url: 'https://zervixlab.com',
+          logo: 'https://zervixlab.com/logo.png',
+          contactPoint: {
+            '@type': 'ContactPoint',
+            telephone: '+94-76-884-9340',
+            contactType: 'sales',
+            availableLanguage: ['English', 'Sinhala'],
+          },
+          sameAs: [
+            'https://wa.me/94768849340',
+          ],
+        },
+      ],
+    };
+
+    jsonLdScript.textContent = JSON.stringify(structuredData);
+
+    // Cleanup on unmount - restore original title and remove schema
     return () => {
       document.title = 'ZervixLab – IT & Graphic Solutions';
+      const schemaScript = document.querySelector('script[data-schema="smarty-menu"]');
+      if (schemaScript) schemaScript.remove();
     };
   }, []);
 
