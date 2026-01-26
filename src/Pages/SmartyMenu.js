@@ -22,6 +22,78 @@ export default function SmartyMenu() {
   const navigate = useNavigate();
   const [contactOpen, setContactOpen] = useState(false);
 
+  // SEO Meta Tags
+  useEffect(() => {
+    // Page Title
+    document.title = 'Smarty Menu | QR Code Restaurant Ordering System | ZervixLab';
+
+    // Meta Description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    const seoDescription = 'Smarty Menu - Modern QR code ordering system for restaurants. Customers scan & order from their phone. Manage menus, track orders, view analytics & daily reports. $425 one-time + $25/month.';
+    if (metaDescription) {
+      metaDescription.setAttribute('content', seoDescription);
+    }
+
+    // Add/Update meta keywords
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.name = 'keywords';
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.content = 'QR code ordering system, restaurant ordering system, QR menu, digital menu, contactless ordering, restaurant management software, table ordering system, mobile ordering, restaurant POS, menu management, Sri Lanka restaurant software, Smarty Menu, ZervixLab';
+
+    // Open Graph Tags
+    const ogTags = [
+      { property: 'og:title', content: 'Smarty Menu | QR Code Restaurant Ordering System' },
+      { property: 'og:description', content: seoDescription },
+      { property: 'og:type', content: 'product' },
+      { property: 'og:url', content: 'https://zervixlab.com/smarty-menu' },
+      { property: 'og:site_name', content: 'ZervixLab' },
+    ];
+
+    ogTags.forEach(({ property, content }) => {
+      let tag = document.querySelector(`meta[property="${property}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('property', property);
+        document.head.appendChild(tag);
+      }
+      tag.content = content;
+    });
+
+    // Twitter Card Tags
+    const twitterTags = [
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: 'Smarty Menu | QR Code Restaurant Ordering System' },
+      { name: 'twitter:description', content: seoDescription },
+    ];
+
+    twitterTags.forEach(({ name, content }) => {
+      let tag = document.querySelector(`meta[name="${name}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.name = name;
+        document.head.appendChild(tag);
+      }
+      tag.content = content;
+    });
+
+    // Canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = 'https://zervixlab.com/smarty-menu';
+
+    // Cleanup on unmount - restore original title
+    return () => {
+      document.title = 'ZervixLab – IT & Graphic Solutions';
+    };
+  }, []);
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
@@ -96,7 +168,23 @@ export default function SmartyMenu() {
                 orders, top dishes, and daily/weekly reports from a powerful admin panel.
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              {/* Pricing */}
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl md:text-4xl font-extrabold text-white">$425</span>
+                  <span className="text-white/60 text-sm">one-time</span>
+                </div>
+                <div className="h-8 w-px bg-white/20 hidden sm:block" />
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl md:text-2xl font-bold text-orange-400">+$25</span>
+                  <span className="text-white/60 text-sm">/month</span>
+                </div>
+                <span className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/20 px-3 py-1 text-xs text-green-300">
+                  Includes updates & support
+                </span>
+              </div>
+
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <a
                   href={downloadHref}
                   target="_blank"
